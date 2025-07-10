@@ -1,0 +1,7 @@
+# Shouldnt be in here, but just in case
+.env
+
+# Nvim
+nvim/lazy-lock.json
+nvim/.venv/
+.DS_STORE
