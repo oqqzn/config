@@ -1,8 +1,9 @@
+-- Helper to create augroups
 local function augroup(name)
 	return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
 end
 
--- Check if we need to reload the file when changed
+-- Reload file if changed outside of Neovim
 vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
 	group = augroup("checktime"),
 	callback = function()
@@ -20,8 +21,8 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
--- Resize splits if window gets resized
-vim.api.nvim_create_autocmd({ "VimResized" }, {
+-- Resize splits on window resize
+vim.api.nvim_create_autocmd("VimResized", {
 	group = augroup("resize_splits"),
 	callback = function()
 		local current_tab = vim.fn.tabpagenr()
@@ -30,7 +31,7 @@ vim.api.nvim_create_autocmd({ "VimResized" }, {
 	end,
 })
 
--- Close some filetypes with <q>
+-- Close certain filetypes with <q>
 vim.api.nvim_create_autocmd("FileType", {
 	group = augroup("close_with_q"),
 	pattern = {
@@ -52,5 +53,17 @@ vim.api.nvim_create_autocmd("FileType", {
 	callback = function(event)
 		vim.bo[event.buf].buflisted = false
 		vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+	end,
+})
+
+-- Fix indentation for Markdown and text files
+vim.api.nvim_create_autocmd("FileType", {
+	group = augroup("markdown_text_indent"),
+	pattern = { "markdown", "text" },
+	callback = function()
+		vim.opt_local.tabstop = 2
+		vim.opt_local.shiftwidth = 2
+		vim.opt_local.softtabstop = 2
+		vim.opt_local.expandtab = true
 	end,
 })

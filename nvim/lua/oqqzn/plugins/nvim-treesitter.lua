@@ -17,6 +17,7 @@ return {
 				"bash",
 				"c",
 				"css",
+				"cpp",
 				"dockerfile",
 				"gitignore",
 				"go",
