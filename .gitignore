@@ -5,3 +5,4 @@
 nvim/lazy-lock.json
 nvim/.venv/
 .DS_STORE
+.CLAUDE.md

@@ -1,6 +1,7 @@
 return {
 	"neovim/nvim-lspconfig",
-	event = { "BufReadPre", "BufNewFile" },
+	lazy = false,
+	--event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
@@ -68,32 +69,13 @@ return {
 		})
 
 		-- 2) Per-server overrides
+
 		vim.lsp.config("html", {
-			cmd = { "html-languageserver", "--stdio" },
+			filetypes = { "html", "htmldjango" },
 		})
 
-		vim.lsp.config("ts_ls", {})
 		vim.lsp.config("cssls", {})
-		vim.lsp.config("tailwindcss", {})
-
-		vim.lsp.config("svelte", {
-			on_attach = function(client, _bufnr)
-				vim.api.nvim_create_autocmd("BufWritePost", {
-					pattern = { "*.js", "*.ts" },
-					callback = function(ctx)
-						if client.name == "svelte" then
-							client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.file })
-						end
-					end,
-				})
-			end,
-		})
-
-		vim.lsp.config("prismals", {})
-
-		vim.lsp.config("graphql", {
-			filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
-		})
+		vim.lsp.config("ts_ls", {})
 
 		vim.lsp.config("clangd", {
 			cmd = {
@@ -104,11 +86,6 @@ return {
 				"--compile-commands-dir=build",
 			},
 			filetypes = { "c", "cpp", "objc", "objcpp" },
-		})
-
-		vim.lsp.config("emmet_ls", {
-			cmd = { "emmet-ls", "--stdio" },
-			filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
 		})
 
 		vim.lsp.config("pyright", {})
@@ -127,17 +104,12 @@ return {
 			},
 		})
 
-		-- 3) Enable servers
+		-- 3) Enable servers (minimal web + your existing python/cpp/lua)
 		vim.lsp.enable({
 			"html",
-			"ts_ls",
 			"cssls",
-			"tailwindcss",
-			"svelte",
-			"prismals",
-			"graphql",
+			"ts_ls",
 			"clangd",
-			"emmet_ls",
 			"pyright",
 			"lua_ls",
 		})

@@ -12,6 +12,13 @@ return {
 		telescope.setup({
 			defaults = {
 				path_display = { "truncate" },
+
+				file_ignore_patterns = {
+					"^%.git/", -- ignore .git directory
+					"%.git/", -- safety net for nested cases
+					"%.DS_Store$",
+				},
+
 				mappings = {
 					i = {
 						["<C-k>"] = actions.move_selection_previous, -- move to prev result
@@ -36,7 +43,7 @@ return {
 		keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Files PWD" })
 		keymap.set("n", "<leader>fa", function()
 			require("telescope.builtin").find_files({
-                cwd = vim.loop.os_homedir(), -- Start searching from the home
+				cwd = vim.loop.os_homedir(), -- Start searching from the home
 				hidden = true, -- Include hidden files in the search
 			})
 		end, { desc = "Files ~" })

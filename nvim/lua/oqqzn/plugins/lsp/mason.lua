@@ -5,10 +5,8 @@ return {
 	},
 	config = function()
 		local mason = require("mason")
-
 		local mason_tool_installer = require("mason-tool-installer")
 
-		-- enable mason and configure icons
 		mason.setup({
 			ui = {
 				icons = {
@@ -21,16 +19,23 @@ return {
 
 		mason_tool_installer.setup({
 			ensure_installed = {
-				"prettier", -- prettier formatter
-				"cpplint", -- c linter
-				"clang-format",
-				"stylua", -- lua formatter
-				"isort", -- python formatter
-				"black", -- python formatter
-				"pylint", -- python linter
-				"pyright",
-				"eslint_d", -- js linter
-				"typescript-language-server",
+				-- formatters
+				"prettier",
+				"clang-format", -- c
+				"stylua", -- lua
+				"isort", -- python
+				"black", -- python
+				-- linters
+				"cpplint", -- c
+				"pylint", -- python
+				"eslint_d", -- js
+				"stylelint", -- css
+				"htmlhint", -- html
+				-- lsp servers
+				"pyright", -- python
+				"typescript-language-server", -- js
+				"html-lsp", -- html
+				"css-lsp", -- css
 			},
 		})
 	end,
